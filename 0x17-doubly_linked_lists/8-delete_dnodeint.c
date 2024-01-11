@@ -1,51 +1,49 @@
 #include "lists.h"
 
 /**
- * delete_dnodeint_at_index - deletes the node at index of a dlistint_t linked list.
+ * delete_dnodeint_at_index - func that deletes the node at index of a, linked list.
+ * @head: pointer to pointer to the h of linked list
+ * @index: Index of the node that should be deleted. Index starts at 0.
  *
- * @head: head of the list.
- * @index: index of the new node.
- * Return: 1 if it succeeded, -1 if it failed
+ * Return: if it succeeded, -1 if it failed
  */
+
 int delete_dnodeint_at_index(dlistint_t **head, unsigned int index)
 {
-	dlistint_t *h1;
-	dlistint_t *h2;
-	unsigned int i;
+	dlistint_t *head1;
+	dlistint_t *head2;
+	unsigned int count;
 
-	h1 = *head;
+	head1 = *head;
 
-	if (h1 != NULL)
-		while (h1->prev != NULL)
-			h1 = h1->prev;
+	if (head1 != NULL)
+		while (head1->prev != NULL)
+			head1 = head1->prev;
+	count = 0;
 
-	i = 0;
-
-	while (h1 != NULL)
+	while (head1 != NULL)
 	{
-		if (i == index)
+		if (count == index)
 		{
-			if (i == 0)
+			if (count == 0)
 			{
-				*head = h1->next;
+				*head = head1->next;
 				if (*head != NULL)
 					(*head)->prev = NULL;
 			}
 			else
 			{
-				h2->next = h1->next;
+				head2->next = head1->next;
 
-				if (h1->next != NULL)
-					h1->next->prev = h2;
+				if (head1->next != NULL)
+					head1->next->prev = head2;
 			}
-
-			free(h1);
+			free(head1);
 			return (1);
 		}
-		h2 = h1;
-		h1 = h1->next;
-		i++;
+		head2 = head1;
+		head1 = head1->next;
+		count++;
 	}
-
 	return (-1);
 }
