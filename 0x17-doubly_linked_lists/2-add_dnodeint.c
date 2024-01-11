@@ -1,43 +1,37 @@
 #include "lists.h"
 
-
 /**
- * add_dnodeint - Adds a new node at the beginning of a dlistint_t list.
- * @head: A pointer to the head of the dlistint_t list
- * @n: The int for the new node to contain
+ * add_dnodeint - adds a new node at the beginning of a dlistint_t list.
  *
- * Return: If the func fails - NULL
- *         Otherwise - the address of the new node
+ * @head: head of the list.
+ * @n: value of the element.
+ * Return: the address of the new element
  */
 dlistint_t *add_dnodeint(dlistint_t **head, const int n)
 {
-    /*Declare a new node pointer.*/
-    dlistint_t *new;
+	dlistint_t *new;
+	dlistint_t *h;
 
+	new = malloc(sizeof(dlistint_t));
+	if (new == NULL)
+		return (NULL);
 
-    /*Allocate memory for the new node.*/
-    new = malloc(sizeof(dlistint_t));
-    /*Check if memory allocation failed.*/
-    if (new == NULL)
-        /*Return NULL if allocation failed.*/
-        return (NULL);
+	new->n = n;
+	new->prev = NULL;
+	h = *head;
 
+	if (h != NULL)
+	{
+		while (h->prev != NULL)
+			h = h->prev;
+	}
 
-    /* Set the value of the new node to the provided int.*/
-    new->n = n;
-    /*Set the previous pointer of the new node to NULL.*/
-    new->prev = NULL;
-    /* Set the next pointer of the new node to the current head.*/
-    new->next = *head;
-    /*Check if the list is not empty.*/
-    if (*head != NULL)
-        /*Update the previous pointer of the current head to the new node.
-*/
-        (*head)->prev = new;
-    /*Update the head pointer to point to the new node.*/
-    *head = new;
+	new->next = h;
 
+	if (h != NULL)
+		h->prev = new;
 
-    /*Return the address of the new node.*/
-    return (new);
+	*head = new;
+
+	return (new);
 }
